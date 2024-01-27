@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import Droppable from './components/Droppable';
+import Line from './components/Line';
 
-function App() {
+const App = () => {
+  const [startIcon, setStartIcon] = useState(null);
+  const [endIcon, setEndIcon] = useState(null);
+  const [startPoint, setStartPoint] = useState(null);
+  const [endPoint, setEndPoint] = useState(null);
+
+  const handleIconClick = (e) => {
+    const icon = e.target.getBoundingClientRect();
+    const position = { x: icon.x, y: icon.y, id: e.target.id };
+
+    if (!startIcon) {
+      setStartIcon(position);
+    } else if (!endIcon) {
+      setEndIcon(position);
+    } else {
+      setStartIcon(position);
+      setEndIcon(null);
+    }
+  };
+
+  const handleDrop = (e) => {
+    const dropPoint = e.target.getBoundingClientRect();
+    const position = { x: dropPoint.x, y: dropPoint.y };
+
+    if (!startPoint) {
+      setStartPoint(position);
+    } else {
+      setEndPoint(position);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: 'flex' }}>
+      <Sidebar />
+      <Droppable onDrop={handleDrop} style={{ flex: 1 }}>
+        <h1>Drop items here</h1>
+        {startPoint && endPoint && <Line start={startPoint} end={endPoint} />}
+      </Droppable>
     </div>
   );
-}
+};
 
 export default App;

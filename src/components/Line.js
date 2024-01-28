@@ -4,6 +4,7 @@ const Line = ({ start, end }) => {
     const yMid = (start.y + end.y) / 2;
     const angle = Math.atan2(end.y - start.y, end.x - start.x) * 180 / Math.PI;
 
+
     return (
         <div
             style={{

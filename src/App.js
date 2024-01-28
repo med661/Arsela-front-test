@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Droppable from './components/Droppable';
 import Line from './components/Line';
+import PageList from './components/pages';
 
 const App = () => {
   const [startIcon, setStartIcon] = useState(null);
@@ -36,11 +37,12 @@ const App = () => {
 
   return (
     <div style={{ display: 'flex' }}>
-      <Sidebar />
+      {  /*    <Sidebar />
       <Droppable onDrop={handleDrop} style={{ flex: 1 }}>
         <h1>Drop items here</h1>
         {startPoint && endPoint && <Line start={startPoint} end={endPoint} />}
-      </Droppable>
+      </Droppable>*/}
+      <PageList></PageList>
     </div>
   );
 };

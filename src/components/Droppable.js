@@ -29,20 +29,33 @@ const Droppable = ({ children }) => {
         const card_copy = card.cloneNode(true);
         card_copy.id = Date.now(); // Give the copy a unique id
 
-        // Get the bounds of the droppable area
         const droppableBounds = e.target.getBoundingClientRect();
 
-        // Set the position of the card copy to the cursor position relative to the droppable area
+        const left = e.clientX - droppableBounds.left;
+        const top = e.clientY - droppableBounds.top;
         card_copy.style.position = 'absolute';
-        card_copy.style.left = `${e.clientX - droppableBounds.left}px`;
-        card_copy.style.top = `${e.clientY - droppableBounds.top}px`;
+        card_copy.style.left = `${left}px`;
+        card_copy.style.top = `${top}px`;
+        let obj = {
+            id: card_copy.id,
+            name: card_copy.innerText,
+            x: left,
+            y: top,
+            format: card_copy.style,
+            width: card_copy.offsetWidth,
+            height: card_copy.offsetHeight,
+            page: children
+        }
 
+        console.log({ obj });
         e.target.appendChild(card_copy);
         console.log({ card_copy });
 
         card_copy.onclick = () => setModalIsOpen(true);
         setItemId(card_copy.id);
-        
+
+        // Log the position of the dropped item
+        console.log('Dropped item position:', { left, top });
     };
 
     const dragOver = (e) => {
